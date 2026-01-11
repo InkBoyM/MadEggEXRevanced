@@ -3,124 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help Support Graphing Calculators!</title>
+    <title>KillSecurly Foundation</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+
         body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: #fff; display: flex; flex-direction: column; align-items: center;
-            padding: 20px; min-height: 100vh; overflow-x: hidden;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background: linear-gradient(135deg, #4a0fb3, #160035);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
         }
-        h1 {
-            font-size: 3.5em; margin: 20px 0 10px; text-transform: uppercase;
-            text-shadow: 0 0 20px #00eaff; animation: fadeSlideDown 1s ease;
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
         }
-        @keyframes fadeSlideDown { 0% { opacity: 0; transform: translateY(-50px); } 100% { opacity: 1; transform: translateY(0); } }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .content * { pointer-events: auto; }
+
+        h1 { font-size: 4em; margin-bottom: 0.5em; text-shadow: 0 0 20px #a66bff, 0 0 40px #a66bff; }
+        p { font-size: 1.5em; margin-bottom: 2em; max-width: 800px; text-shadow: 0 0 10px #a66bff; margin-left: auto; margin-right: auto; }
+
+        .buttons { display: flex; gap: 35px; justify-content: center; margin-bottom: 20px; }
         
-        .search-container input {
-            padding: 15px 25px; font-size: 1.1em; border-radius: 50px;
-            border: 2px solid rgba(0, 234, 255, 0.3); background: rgba(255, 255, 255, 0.1);
-            outline: none; color: white; width: 400px; margin-bottom: 30px; transition: 0.3s;
+        .buttons a {
+            font-size: 3.5em; 
+            text-decoration: none; 
+            color: #ffffff;
+            padding: 20px; 
+            border-radius: 20px; 
+            transition: 0.25s;
+            border: 3px solid #a66bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .search-container input:focus { border-color: #00eaff; box-shadow: 0 0 25px rgba(0, 234, 255, 0.5); }
 
-        .games-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px; width: 100%; max-width: 1400px;
+        .buttons a:hover { 
+            transform: scale(1.15); 
+            text-shadow: 0 0 30px #00eaff, 0 0 60px #00eaff;
+            border-color: #00eaff; 
+            box-shadow: 0 0 20px rgba(0, 234, 255, 0.5); 
         }
-        .game-card {
-            background: rgba(27, 13, 51, 0.6); border: 1px solid rgba(166, 107, 255, 0.2);
-            border-radius: 20px; padding: 10px; cursor: pointer;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column; align-items: center; opacity: 0;
-            animation: cardFadeUp 0.6s forwards;
-        }
-        @keyframes cardFadeUp { 100% { opacity: 1; transform: translateY(0); } }
-        .game-card:hover { transform: translateY(-10px); border-color: #00eaff; box-shadow: 0 10px 30px rgba(0, 234, 255, 0.4); }
-        .game-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 15px; margin-bottom: 12px; }
 
-        #gm-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 1000; }
-        #close-btn { position: fixed; top: 15px; right: 20px; background: #ff4b2b; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; z-index: 1001; }
-        iframe { width: 100%; height: 100%; border: none; }
+        .settings-button { position: absolute; top: 20px; right: 20px; font-size: 1.6em; background: none; color: #ffffff; border: none; cursor: pointer; text-shadow: 0 0 12px #a66bff; transition: 0.25s; z-index: 10; }
+        .settings-button:hover { transform: scale(1.3); text-shadow: 0 0 20px #d5a1ff; }
+
+        .settings-panel {
+            display: none;
+            position: absolute; top: 65px; right: 20px;
+            background: rgba(27, 13, 51, 0.9); padding: 20px; border-radius: 12px;
+            box-shadow: 0 0 20px #a66bff; color: #fff; z-index: 10;
+        }
+
+        .download-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 2.3em;
+            color: #ffffff;
+            cursor: pointer;
+            text-shadow: 0 0 12px #00eaff;
+            transition: 0.25s;
+            z-index: 10;
+        }
+        .download-btn:hover { transform: scale(1.3); text-shadow: 0 0 25px #00eaff; }
     </style>
 </head>
 <body>
 
-    <h1>K!llS☰curly Foundation</h1>
-    <div class="search-container"><input type="text" id="searchInput" placeholder="Search games..."></div>
-    <div class="games-grid" id="gamesGrid"></div>
+<div id="particles-js"></div>
+
+<div class="content">
+    <h1>KillSecurly Foundation</h1>
+    <p id="random-quote">Loading</p>
+
+    <div class="buttons">
+        <a href="https://discord.killsecurly.com" target="_blank"><i class="fa-brands fa-discord"></i></a>
+        <a href="/projects.html"><i class="fa-solid fa-gamepad"></i></a>
+        <a href="https://killsecurly.com" target="_blank"><i class="fa-solid fa-link"></i></a>
+    </div>
+</div>
+
+<button class="settings-button" id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
+<div class="settings-panel" id="settingsPanel">
+    <label for="colorPicker">Particle Color:</label>
+    <input type="color" id="colorPicker" value="#ffffff">
+</div>
+<i class="fa-solid fa-download download-btn" id="downloadFile" title="Download Learning File"></i>
 
 <script>
-    const PRIORITY_GAMES = ["Subway Surfers", "Slope", "Stickman Hook", "paper.io", "basketrandom", "Cookie Clicker", "Dadish", "1v1.lol", "Drift Boss", "Retro Bowl", "Doge Miner", "Crossy Rooad"];
-    let allGames = [];
+    const quotes = ["pay attention during school", "KillSecurly >>> now.gg", "join the discord NOW", "linux is so much better than windows", "chromebooks suck", "KillSecurly has not shut down.", "UNDERTALE IS PEAK", "CELESTE IS PEAK", "Ryan is always correct", "i love piracy", "ai is gonna take over the world", "KillSecurly is the best", "technoblade never dies"];
+    document.getElementById("random-quote").innerText = quotes[Math.floor(Math.random() * quotes.length)];
 
-    async function loadGames() {
-        const response = await fetch("https://cdn.jsdelivr.net/gh/gn-math/assets/zones.json");
-        const games = await response.json();
-        
-        let fetched = games.filter(g => g.id !== -1).map(g => ({
-            name: g.name,
-            image: g.cover.replace('{COVER_URL}','https://cdn.jsdelivr.net/gh/gn-math/covers@main'),
-            url: g.url.replace('{HTML_URL}','https://cdn.jsdelivr.net/gh/gn-math/html@main'),
-            type: 'standard'
-        }));
+    const settingsBtn = document.getElementById('settingsBtn');
+    const settingsPanel = document.getElementById('settingsPanel');
+    settingsBtn.onclick = () => { settingsPanel.style.display = settingsPanel.style.display === 'block' ? 'none' : 'block'; };
 
-        const shellShockers = {
-            name: "Shell Shockers",
-            image: "https://imgs.crazygames.com/shellshockersio_1x1/20260108131651/shellshockersio_1x1-cover?format=auto&quality=100&metadata=none&width=1200",
-            url: "https://yolk.today",
-            type: 'embed'
-        };
+    const colorPicker = document.getElementById('colorPicker');
+    const savedColor = localStorage.getItem('particleColor') || '#ffffff';
+    colorPicker.value = savedColor;
 
-        allGames = [];
-        
-        PRIORITY_GAMES.forEach(p => {
-            let found = fetched.find(g => g.name === p);
-            if (found) allGames.push(found);
-            if (p === "Crossy Rooad") allGames.push(shellShockers);
-        });
-
-        fetched.forEach(g => {
-            if (!PRIORITY_GAMES.includes(g.name)) allGames.push(g);
-        });
-
-        displayGames(allGames);
-    }
-
-    function displayGames(list) {
-        const grid = document.getElementById('gamesGrid');
-        grid.innerHTML = '';
-        list.forEach((game, i) => {
-            const card = document.createElement('div');
-            card.className = 'game-card';
-            card.style.animationDelay = `${Math.min(i * 0.05, 1)}s`;
-            card.innerHTML = `<img src="${game.image}"><h3>${game.name}</h3>`;
-            card.onclick = () => openGame(game);
-            grid.appendChild(card);
+    function initParticles(color) {
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": color },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.8, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": color, "opacity": 0.4, "width": 1 },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } },
+                "modes": { "repulse": { "distance": 150, "duration": 0.4 } }
+            },
+            "retina_detect": true
         });
     }
+    initParticles(savedColor);
+    colorPicker.addEventListener("input", () => {
+        const newColor = colorPicker.value;
+        localStorage.setItem("particleColor", newColor);
+        initParticles(newColor);
+    });
 
-    async function openGame(game) {
-        const popup = document.createElement("div");
-        popup.id = "gm-popup";
-        popup.innerHTML = `<button id="close-btn" onclick="this.parentElement.remove()">CLOSE</button><iframe id="f"></iframe>`;
-        document.body.appendChild(popup);
-        const f = document.getElementById("f");
-        
-        if (game.type === 'embed') {
-            f.contentDocument.write(`<html><body style="margin:0"><embed src="${game.url}" width="100%" height="100%"></body></html>`);
-        } else {
-            const code = await (await fetch(game.url)).text();
-            f.contentDocument.open(); f.contentDocument.write(code); f.contentDocument.close();
-        }
-    }
-
-    document.getElementById('searchInput').oninput = (e) => {
-        const q = e.target.value.toLowerCase();
-        displayGames(allGames.filter(g => g.name.toLowerCase().includes(q)));
+    document.getElementById("downloadFile").onclick = () => {
+        const fileContent = `<!DOCTYPE html><html><head><title>Learning</title><style>html, body { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; } iframe { width: 100%; height: 100%; border: none; }</style></head><body><iframe src="https://ksfis.onthewifi.com"></iframe></body></html>`;
+        const blob = new Blob([fileContent], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = "learning.html"; a.click();
+        URL.revokeObjectURL(url);
     };
-
-    loadGames();
 </script>
 </body>
 </html>
