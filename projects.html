@@ -94,7 +94,7 @@
         "retina_detect": true
     });
 
-    const PRIORITY_GAMES = ["Subway Surfers", "Slope", "Stickman Hook", "paper.io", "basketrandom", "Cookie Clicker", "Dadish", "1v1.lol", "Drift Boss", "Retro Bowl", "Doge Miner", "Crossy Rooad"];
+    const PRIORITY_GAMES = ["Subway Surfers", "Slope", "test", "Stickman Hook", "paper.io", "basketrandom", "Cookie Clicker", "Dadish", "1v1.lol", "Drift Boss", "Retro Bowl", "Doge Miner", "Crossy Rooad"];
     let allGames = [];
 
     async function loadGames() {
@@ -116,11 +116,21 @@
                 type: 'embed'
             };
 
+            const testGame = {
+                name: "5 Nights at Epst!ens",
+                image: "https://file.garden/Z43SqDt67TpUFO8v/fnae.png",
+                url: "https://inkboym.github.io/5nights/",
+                type: 'embed'
+            };
+
             allGames = [];
             PRIORITY_GAMES.forEach(p => {
                 let found = fetched.find(g => g.name === p);
                 if (found) allGames.push(found);
+                
                 if (p === "Crossy Rooad") allGames.push(shellShockers);
+                
+                if (p === "test") allGames.push(testGame);
             });
 
             fetched.forEach(g => {
@@ -128,7 +138,7 @@
             });
 
             displayGames(allGames);
-        } catch (e) { console.error("Failed to load games", e); }
+        } catch (e) { console.error("check wifi", e); }
     }
 
     function displayGames(list) {
